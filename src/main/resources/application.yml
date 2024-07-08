@@ -1,0 +1,32 @@
+server:
+  port: 8081
+
+spring:
+  profiles:
+    active: dev
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: learninge452@gmail.com
+    password: cudpeeulxrpjdgak
+    properties:
+      mail:
+        smtp:
+          auth : true
+          starttls:
+            enable : true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tagardedb
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+      database: postgresql
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
