@@ -18,4 +18,8 @@ public class GeneralManager extends UserEntity {
 
     @OneToMany(mappedBy = "generalManager", fetch = FetchType.EAGER)
     private List<Hospital> hoiptals;
+
+    public static GeneralManagerBuilder builder() {
+        return new GeneralManagerBuilder();
+    }
 }
