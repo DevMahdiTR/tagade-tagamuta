@@ -25,6 +25,10 @@ public class Doctor extends UserEntity {
     private String codeCNOM;
     private String codeCNAM;
 
+    public static DoctorBuilder Builder(){
+        return new DoctorBuilder();
+    }
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hospital_department_id")
     private HospitalDepartment hospitalDepartment;
