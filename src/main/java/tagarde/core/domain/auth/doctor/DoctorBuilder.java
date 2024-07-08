@@ -7,12 +7,14 @@ import java.util.UUID;
 
 public class DoctorBuilder {
     private UUID id;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String phoneNumber;
     private String email;
     private String password;
     private boolean isEnabled;
     private Role role;
-    private String phoneNumber;
-    private String address;
     private String speciality;
     private LocalDate dateOfBirth;
     private String codeCNOM;
@@ -21,6 +23,17 @@ public class DoctorBuilder {
         this.id = id;
         return this;
     }
+
+    public DoctorBuilder firstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public DoctorBuilder lastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
     public DoctorBuilder email(String email) {
         this.email = email;
         return this;
@@ -64,16 +77,21 @@ public class DoctorBuilder {
     }
     public Doctor build() {
         Doctor doctor = new Doctor();
+
         doctor.setId(id);
+        doctor.setFirstName(firstName);
+        doctor.setLastName(lastName);
+        doctor.setPhoneNumber(phoneNumber);
+        doctor.setAddress(address);
         doctor.setEmail(email);
         doctor.setPassword(password);
         doctor.setRole(role);
-        doctor.setPhoneNumber(phoneNumber);
-        doctor.setAddress(address);
+
         doctor.setSpeciality(speciality);
         doctor.setDateOfBirth(dateOfBirth);
         doctor.setCodeCNOM(codeCNOM);
         doctor.setCodeCNAM(codeCNAM);
+
         return doctor;
 
     }

@@ -8,6 +8,10 @@ import java.util.UUID;
 public class GeneralManagerBuilder {
 
     private UUID id;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String phoneNumber;
     private String email;
     private String password;
     private boolean isEnabled;
@@ -15,6 +19,26 @@ public class GeneralManagerBuilder {
 
     public GeneralManagerBuilder id(UUID id) {
         this.id = id;
+        return this;
+    }
+
+    public GeneralManagerBuilder firstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public GeneralManagerBuilder lastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public GeneralManagerBuilder address(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public GeneralManagerBuilder phoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
         return this;
     }
 
@@ -41,6 +65,10 @@ public class GeneralManagerBuilder {
     public GeneralManager build(){
         GeneralManager generalManager = new GeneralManager();
         generalManager.setId(id);
+        generalManager.setFirstName(firstName);
+        generalManager.setLastName(lastName);
+        generalManager.setAddress(address);
+        generalManager.setPhoneNumber(phoneNumber);
         generalManager.setEmail(email);
         generalManager.setPassword(password);
         generalManager.setEnabled(isEnabled);
