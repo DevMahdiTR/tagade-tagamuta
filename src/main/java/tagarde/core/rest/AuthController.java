@@ -3,6 +3,7 @@ package tagarde.core.rest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import tagarde.core.domain.auth.login.LogInDTO;
 import tagarde.core.domain.auth.login.LogInResponseDTO;
@@ -25,8 +26,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public CustomerResponse<String> register(@RequestParam String role, @RequestBody RegisterDoctorDTO registerUserDTO) {
-        return authService.register(role, registerUserDTO);
+    public CustomerResponse<String> register(Authentication authentication, @RequestParam String role, @RequestBody RegisterDoctorDTO registerUserDTO) {
+        return authService.register(authentication,role, registerUserDTO);
     }
 
     @PostMapping("/login")

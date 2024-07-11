@@ -20,9 +20,19 @@ spring:
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 30000
+      maximum-pool-size: 10
+      auto-commit: true
+      pool-name: MyHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: false
     properties:
       hibernate:

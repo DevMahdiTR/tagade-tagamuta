@@ -11,16 +11,16 @@ import tagarde.core.repository.RoleRepository;
 import tagarde.core.service.role.RoleService;
 
 @SpringBootApplication
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class TagardeApplication {
 
-	private final RoleRepository roleRepository;
+	//private final RoleRepository roleRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(TagardeApplication.class, args);
 	}
 
-	@PostConstruct
+	/*@PostConstruct
 	public void init() {
 		roleRepository.save(new Role("ROLE_ADMIN"));
 		roleRepository.save(new Role("ROLE_DOCTOR"));
@@ -28,6 +28,6 @@ public class TagardeApplication {
 		roleRepository.save(new Role("ROLE_DEPARTMENT_MANAGER"));
 		roleRepository.save(new Role("ROLE_HOSPITAL_OWNER"));
 
-	}
+	}*/
 
 }

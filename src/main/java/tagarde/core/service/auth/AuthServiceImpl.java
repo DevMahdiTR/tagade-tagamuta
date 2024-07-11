@@ -21,6 +21,7 @@ import tagarde.core.domain.token.confirmation.ConfirmationToken;
 import tagarde.core.domain.token.refresh.RefreshToken;
 import tagarde.core.domain.token.refresh.RefreshTokenFactory;
 import tagarde.core.exceptions.custom.InvalidTokenException;
+import tagarde.core.exceptions.custom.UnauthorizedActionException;
 import tagarde.core.service.auth.register.AdminRegistration;
 import tagarde.core.service.auth.register.DoctorRegistration;
 import tagarde.core.service.auth.register.GeneralManagerRegistration;
@@ -30,6 +31,7 @@ import tagarde.core.service.user.UserEntityService;
 import tagarde.core.utility.CustomerResponse;
 import tagarde.core.utility.ThymeleafUtil;
 import tagarde.security.jwt.JwtTokenProvider;
+import tagarde.security.utility.RoleCapabilities;
 
 import java.util.Collections;
 
@@ -54,7 +56,18 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public CustomerResponse<String> register(@NotNull String role, @NotNull RegisterUserDTO registerUserDTO) {
+    public CustomerResponse<String> register(Authentication authentication,@NotNull String role, @NotNull RegisterUserDTO registerUserDTO) {
+
+        if(authentication == null){
+            throw new UnauthorizedActionException("Unauthorized action");
+        }
+
+        String currentRole = authentication.getAuthorities().iterator().next().getAuthority();
+
+        if(!RoleCapabilities.canCreateRole(currentRole, role)){
+            throw new UnauthorizedActionException("Unauthorized action");
+        }
+
         if(AuthenticationRoles.ROLE_ADMIN.equalsIgnoreCase(role)){
             return adminRegistration.register(registerUserDTO);
         } else if(AuthenticationRoles.ROLE_GENERAL_MANAGER.equalsIgnoreCase(role)){
