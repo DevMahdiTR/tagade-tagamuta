@@ -7,6 +7,8 @@ import java.util.UUID;
 
 public class DoctorBuilder {
     private UUID id;
+    private String firsName;
+    private String lastName;
     private String email;
     private String password;
     private boolean isEnabled;
@@ -21,6 +23,18 @@ public class DoctorBuilder {
         this.id = id;
         return this;
     }
+
+    public DoctorBuilder firstName(String firstName) {
+        this.firsName = firstName;
+        return this;
+    }
+
+    public DoctorBuilder lastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+
     public DoctorBuilder email(String email) {
         this.email = email;
         return this;
@@ -65,6 +79,8 @@ public class DoctorBuilder {
     public Doctor build() {
         Doctor doctor = new Doctor();
         doctor.setId(id);
+        doctor.setFirstName(firsName);
+        doctor.setLastName(lastName);
         doctor.setEmail(email);
         doctor.setPassword(password);
         doctor.setRole(role);

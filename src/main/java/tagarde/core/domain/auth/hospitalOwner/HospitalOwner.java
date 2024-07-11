@@ -16,4 +16,9 @@ public class HospitalOwner extends UserEntity {
     @OneToOne
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
+
+
+    public static HospitalOwnerBuilder builder(){
+        return new HospitalOwnerBuilder();
+    }
 }

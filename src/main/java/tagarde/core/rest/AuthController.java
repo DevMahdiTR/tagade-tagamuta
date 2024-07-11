@@ -1,12 +1,13 @@
 package tagarde.core.rest;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.*;
-import tagarde.core.domain.auth.LogInDTO;
-import tagarde.core.domain.auth.LogInResponseDTO;
-import tagarde.core.domain.auth.RegisterDTO;
-import tagarde.core.domain.auth.RegisterResponseDTO;
+import tagarde.core.domain.auth.login.LogInDTO;
+import tagarde.core.domain.auth.login.LogInResponseDTO;
+import tagarde.core.domain.auth.register.RegisterDoctorDTO;
+import tagarde.core.domain.auth.register.RegisterUserDTO;
 import tagarde.core.service.auth.AuthService;
 import tagarde.config.APIRouters;
 import tagarde.core.utility.CustomerResponse;
@@ -14,6 +15,7 @@ import tagarde.core.utility.CustomerResponse;
 
 @RestController
 @RequestMapping(APIRouters.AUTH_ROUTER)
+@Slf4j
 public class AuthController {
 
     private final AuthService authService;
@@ -22,10 +24,9 @@ public class AuthController {
         this.authService = authService;
     }
 
-
     @PostMapping("/register")
-    public CustomerResponse<RegisterResponseDTO> register(@NotNull @Valid @RequestBody final RegisterDTO registerDTO) {
-        return authService.register(registerDTO);
+    public CustomerResponse<String> register(@RequestParam String role, @RequestBody RegisterDoctorDTO registerUserDTO) {
+        return authService.register(role, registerUserDTO);
     }
 
     @PostMapping("/login")

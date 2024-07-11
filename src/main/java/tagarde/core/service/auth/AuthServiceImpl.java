@@ -5,26 +5,34 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import tagarde.core.service.email.EmailService;
-import tagarde.core.service.role.RoleService;
-import tagarde.core.service.token.TokenService;
-import tagarde.core.domain.auth.LogInDTO;
-import tagarde.core.domain.auth.LogInResponseDTO;
-import tagarde.core.domain.auth.RegisterDTO;
-import tagarde.core.domain.auth.RegisterResponseDTO;
-import tagarde.core.exceptions.custom.InvalidTokenException;
+import tagarde.config.AuthenticationRoles;
+import tagarde.core.domain.auth.login.LogInDTO;
+import tagarde.core.domain.auth.login.LogInResponseDTO;
+import tagarde.core.domain.auth.register.RegisterDoctorDTO;
+import tagarde.core.domain.auth.register.RegisterUserDTO;
+import tagarde.core.domain.auth.user.UserEntity;
 import tagarde.core.domain.token.access.AccessToken;
+import tagarde.core.domain.token.access.AccessTokenFactory;
 import tagarde.core.domain.token.confirmation.ConfirmationToken;
 import tagarde.core.domain.token.refresh.RefreshToken;
-import tagarde.core.domain.auth.user.UserEntity;
-import tagarde.security.jwt.JwtTokenProvider;
+import tagarde.core.domain.token.refresh.RefreshTokenFactory;
+import tagarde.core.exceptions.custom.InvalidTokenException;
+import tagarde.core.service.auth.register.AdminRegistration;
+import tagarde.core.service.auth.register.DoctorRegistration;
+import tagarde.core.service.auth.register.GeneralManagerRegistration;
+import tagarde.core.service.auth.register.HospitalOwnerRegistration;
+import tagarde.core.service.token.TokenService;
 import tagarde.core.service.user.UserEntityService;
 import tagarde.core.utility.CustomerResponse;
 import tagarde.core.utility.ThymeleafUtil;
+import tagarde.security.jwt.JwtTokenProvider;
 
 import java.util.Collections;
+
 
 @Service
 @AllArgsConstructor
@@ -32,70 +40,37 @@ import java.util.Collections;
 public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;
-    private final PasswordEncoder passwordEncoder;
     private final UserEntityService userEntityService;
-    private final RoleService roleService;
+    private final JwtTokenProvider jwtTokenProvider;
+
     private final TokenService<AccessToken> accessTokenTokenService;
     private final TokenService<RefreshToken> refreshTokenTokenService;
     private final TokenService<ConfirmationToken> confirmationTokenTokenService;
-    private final EmailService emailService;
-    private final JwtTokenProvider jwtTokenProvider;
+
+    private final AdminRegistration adminRegistration;
+    private final GeneralManagerRegistration generalManagerRegistration;
+    private final HospitalOwnerRegistration hospitalOwnerRegistration;
+    private final DoctorRegistration doctorRegistration;
+
 
     @Override
-    public CustomerResponse<RegisterResponseDTO> register(@NotNull RegisterDTO registerDTO) {
-
-       /* log.debug("Attempting to register user with email: {}", registerDTO.getEmail());
-
-        if (userEntityService.isEmailRegistered(registerDTO.getEmail())) {
-            log.warn("Email already registered: {}", registerDTO.getEmail());
-            throw new EmailRegisteredException("Email already in use.");
+    public CustomerResponse<String> register(@NotNull String role, @NotNull RegisterUserDTO registerUserDTO) {
+        if(AuthenticationRoles.ROLE_ADMIN.equalsIgnoreCase(role)){
+            return adminRegistration.register(registerUserDTO);
+        } else if(AuthenticationRoles.ROLE_GENERAL_MANAGER.equalsIgnoreCase(role)){
+            return generalManagerRegistration.register(registerUserDTO);
+        } else if(AuthenticationRoles.ROLE_HOSPITAL_OWNER.equalsIgnoreCase(role)){
+            return hospitalOwnerRegistration.register(registerUserDTO);
+        } else if(AuthenticationRoles.ROLE_DOCTOR.equalsIgnoreCase(role)){
+            return doctorRegistration.register(registerUserDTO);
+        } else {
+            return new CustomerResponse<>("Invalid role", HttpStatus.BAD_REQUEST);
         }
-
-        final Role role = roleService.fetchRoleByName("CLIENT");
-
-        UserEntity newUser = UserEntity
-                .builder()
-                .email(registerDTO.getEmail())
-                .password(passwordEncoder.encode(registerDTO.getPassword()))
-                .userRole(role)
-                .isEnabled(false)
-                .build();
-
-        UserEntity savedUser = userEntityService.save(newUser);
-
-        RefreshToken refreshToken = new RefreshTokenFactory().build(savedUser);
-        ConfirmationToken confirmationToken = new ConfirmationTokenFactory().build(savedUser);
-        confirmationTokenTokenService.saveAndFlush(confirmationToken);
-        refreshTokenTokenService.saveAndFlush(refreshToken);
-
-        String activationLink = APIRouters.getConfirmationURL(confirmationToken.getToken());
-
-        log.debug("Sending activation email to: {}", registerDTO.getEmail());
-        emailService.sendMail(
-                registerDTO.getEmail(),
-                "Activating your account.",
-                "email-confirmation",
-                Map.of(
-                        "name", registerDTO.getEmail(),
-                        "link", activationLink
-                )
-        );
-
-        final RegisterResponseDTO registerResponseDTO = RegisterResponseDTO
-                .builder()
-                .userEntityDTO(userEntityService.mapper(savedUser))
-                .confirmationToken(confirmationToken.getToken())
-                .refreshToken(refreshToken.getToken())
-                .build();
-
-        log.info("User registered successfully: {}", registerDTO.getEmail());
-        return new CustomerResponse<>(registerResponseDTO, HttpStatus.CREATED);*/
-        return null;
     }
 
     @Override
     public CustomerResponse<LogInResponseDTO> logIn(@NotNull LogInDTO logInDTO) {
-       /* log.debug("Attempting to log in user with email: {}", logInDTO.getEmail());
+        log.debug("Attempting to log in user with email: {}", logInDTO.getEmail());
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -123,8 +98,7 @@ public class AuthServiceImpl implements AuthService {
                 .build();
 
         log.info("User logged in successfully: {}", logInDTO.getEmail());
-        return new CustomerResponse<>(logInResponseDTO, HttpStatus.OK);*/
-        return null;
+        return new CustomerResponse<>(logInResponseDTO, HttpStatus.OK);
     }
 
     @Override

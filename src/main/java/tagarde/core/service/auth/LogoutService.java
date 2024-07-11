@@ -22,7 +22,6 @@ public class LogoutService implements LogoutHandler {
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-
         final String jwt = jwtTokenProvider.resolveToken(request);
         AccessToken storedToken = tokenService.findByToken(jwt);
         if (storedToken != null) {

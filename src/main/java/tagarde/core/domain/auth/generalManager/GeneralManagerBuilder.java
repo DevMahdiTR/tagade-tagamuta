@@ -1,6 +1,5 @@
 package tagarde.core.domain.auth.generalManager;
 
-import tagarde.core.domain.auth.departmentManager.DepartmentManager;
 import tagarde.core.domain.role.Role;
 
 import java.util.UUID;

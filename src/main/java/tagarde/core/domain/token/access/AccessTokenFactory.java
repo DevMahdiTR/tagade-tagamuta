@@ -6,8 +6,6 @@ import tagarde.core.domain.token.TokenGenerator;
 import tagarde.core.domain.auth.user.UserEntity;
 
 public class AccessTokenFactory extends TokenFactory<AccessToken> {
-
-
     @Override
     protected AccessToken create(UserEntity userEntity) {
         return AccessToken.

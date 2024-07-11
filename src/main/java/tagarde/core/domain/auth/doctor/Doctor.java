@@ -18,20 +18,19 @@ import java.util.List;
 @DiscriminatorValue("DOCTOR")
 public class Doctor extends UserEntity {
 
-    private String phoneNumber;
-    private String address;
     private String speciality;
     private LocalDate dateOfBirth;
     private String codeCNOM;
     private String codeCNAM;
 
-    public static DoctorBuilder Builder(){
+    public static DoctorBuilder builder(){
         return new DoctorBuilder();
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hospital_department_id")
     private HospitalDepartment hospitalDepartment;
+
 
     @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY)
     private List<DoctorSchedule> doctorSchedules;

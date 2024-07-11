@@ -1,13 +1,21 @@
-package tagarde.core.domain.auth;
+package tagarde.core.domain.auth.register;
 
 
 import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Builder
-@Data
-public class RegisterDTO {
+
+@Setter
+@Getter
+public class RegisterUserDTO {
+
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String phoneNumber;
 
     @Pattern(regexp = "[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*$", message = "Invalid email address. Please enter a valid email.")
     private String email;

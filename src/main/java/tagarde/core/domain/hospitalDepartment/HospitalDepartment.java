@@ -6,7 +6,6 @@ import tagarde.core.domain.department.Department;
 import tagarde.core.domain.hospital.Hospital;
 import tagarde.core.domain.schedule.Schedule;
 import tagarde.core.domain.auth.doctor.Doctor;
-import tagarde.core.domain.auth.departmentManager.DepartmentManager;
 
 import java.util.List;
 
@@ -37,8 +36,8 @@ public class HospitalDepartment {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @OneToOne(mappedBy = "hospitalDepartment", fetch = FetchType.EAGER)
-    private DepartmentManager departmentManager;
+    @OneToOne(fetch = FetchType.EAGER)
+    private Doctor departmentManager;
 
     @OneToMany(mappedBy = "hospitalDepartment", fetch = FetchType.EAGER)
     private List<Doctor> doctors;

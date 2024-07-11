@@ -49,7 +49,6 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(APIRouters.AUTH_ROUTER + "/**").permitAll()
-                .requestMatchers("/api/v1/test/**").hasAuthority("CLIENT")
                 .anyRequest().permitAll()
                 .and()
                 .sessionManagement()

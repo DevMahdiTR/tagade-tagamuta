@@ -18,7 +18,7 @@ public class AdminBuilder {
     public AdminBuilder id(UUID id) {
         this.id = id;
         return this;
-    };
+    }
 
     public AdminBuilder firstName(String firstName) {
         this.firstName = firstName;

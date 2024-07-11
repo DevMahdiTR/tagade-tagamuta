@@ -4,7 +4,6 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
-import tagarde.core.domain.auth.doctor.DoctorBuilder;
 import tagarde.core.domain.auth.user.UserEntity;
 
 
@@ -17,7 +16,7 @@ import tagarde.core.domain.auth.user.UserEntity;
 public class Admin  extends UserEntity {
 
 
-    public static AdminBuilder Builder(){
+    public static AdminBuilder builder(){
         return new AdminBuilder();
     }
 }

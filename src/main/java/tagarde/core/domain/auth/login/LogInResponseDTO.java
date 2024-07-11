@@ -1,14 +1,13 @@
-package tagarde.core.domain.auth;
-
+package tagarde.core.domain.auth.login;
 
 import lombok.Builder;
 import lombok.Data;
 import tagarde.core.domain.auth.user.UserEntityDTO;
 
-@Builder
 @Data
-public class RegisterResponseDTO {
+@Builder
+public class LogInResponseDTO {
     private UserEntityDTO userEntityDTO;
-    private String confirmationToken;
+    private String accessToken;
     private String refreshToken;
 }

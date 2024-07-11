@@ -1,4 +1,4 @@
-package tagarde.core.domain.auth;
+package tagarde.core.domain.auth.login;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
