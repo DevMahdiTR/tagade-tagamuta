@@ -14,6 +14,10 @@ public class UserEntityDTOMapper implements Function<UserEntity, UserEntityDTO> 
     public UserEntityDTO apply(@NotNull UserEntity userEntity) {
         return new UserEntityDTO(
                 userEntity.getId(),
+                userEntity.getFirstName(),
+                userEntity.getLastName(),
+                userEntity.getAddress(),
+                userEntity.getPhoneNumber(),
                 userEntity.getEmail(),
                 userEntity.getRole(),
                 userEntity.isEnabled()

@@ -1,7 +1,9 @@
 package tagarde.core.service.auth;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import tagarde.config.AuthenticationRoles;
+import tagarde.core.domain.auth.doctor.Doctor;
 import tagarde.core.domain.auth.login.LogInDTO;
 import tagarde.core.domain.auth.login.LogInResponseDTO;
 import tagarde.core.domain.auth.register.RegisterDoctorDTO;
@@ -68,17 +71,13 @@ public class AuthServiceImpl implements AuthService {
             throw new UnauthorizedActionException("Unauthorized action");
         }
 
-        if(AuthenticationRoles.ROLE_ADMIN.equalsIgnoreCase(role)){
-            return adminRegistration.register(registerUserDTO);
-        } else if(AuthenticationRoles.ROLE_GENERAL_MANAGER.equalsIgnoreCase(role)){
-            return generalManagerRegistration.register(registerUserDTO);
-        } else if(AuthenticationRoles.ROLE_HOSPITAL_OWNER.equalsIgnoreCase(role)){
-            return hospitalOwnerRegistration.register(registerUserDTO);
-        } else if(AuthenticationRoles.ROLE_DOCTOR.equalsIgnoreCase(role)){
-            return doctorRegistration.register(registerUserDTO);
-        } else {
-            return new CustomerResponse<>("Invalid role", HttpStatus.BAD_REQUEST);
-        }
+        return switch (role) {
+            case AuthenticationRoles.ROLE_ADMIN -> adminRegistration.register(registerUserDTO);
+            case AuthenticationRoles.ROLE_GENERAL_MANAGER -> generalManagerRegistration.register(registerUserDTO);
+            case AuthenticationRoles.ROLE_HOSPITAL_OWNER -> hospitalOwnerRegistration.register(registerUserDTO);
+            case AuthenticationRoles.ROLE_DOCTOR -> doctorRegistration.register(registerUserDTO);
+            default -> new CustomerResponse<>("Invalid role", HttpStatus.BAD_REQUEST);
+        };
     }
 
     @Override
@@ -94,6 +93,7 @@ public class AuthServiceImpl implements AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         UserEntity user = userEntityService.getUserByEmail(logInDTO.getEmail());
+
 
         accessTokenTokenService.revokeAllUserToken(user);
         refreshTokenTokenService.revokeAllUserToken(user);
