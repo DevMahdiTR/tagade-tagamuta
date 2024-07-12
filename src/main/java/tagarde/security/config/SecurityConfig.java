@@ -49,6 +49,17 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(APIRouters.AUTH_ROUTER + "/**").permitAll()
+                .requestMatchers(
+                        "/swagger-ui.html",
+                        "/swagger-ui/**",
+                        "/v2/api-docs",
+                        "/v3/api-docs",
+                        "/v3/api-docs/**",
+                        "/swagger-resources/**",
+                        "/webjars/**",
+                        "configuration/ui",
+                        "configuration/security"
+                ).permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .sessionManagement()

@@ -76,6 +76,6 @@ public abstract class UserRegistration<T extends UserEntity> {
         );
 
         log.info("User registered successfully: {}", registerUserDTO.getEmail());
-        return new CustomerResponse<>("Created", HttpStatus.CREATED);
+        return new CustomerResponse<>("User registered successfully", HttpStatus.CREATED);
     }
 }
