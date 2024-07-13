@@ -1,6 +1,7 @@
 package tagarde.core.domain.auth.doctor;
 
 import tagarde.core.domain.role.Role;
+import tagarde.core.domain.speciality.Speciality;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -15,7 +16,7 @@ public class DoctorBuilder {
     private Role role;
     private String phoneNumber;
     private String address;
-    private String speciality;
+    private Speciality speciality;
     private LocalDate dateOfBirth;
     private String codeCNOM;
     private String codeCNAM;
@@ -33,7 +34,6 @@ public class DoctorBuilder {
         this.lastName = lastName;
         return this;
     }
-
 
     public DoctorBuilder email(String email) {
         this.email = email;
@@ -60,7 +60,7 @@ public class DoctorBuilder {
         this.address = address;
         return this;
     }
-    public DoctorBuilder speciality(String speciality) {
+    public DoctorBuilder speciality(Speciality speciality) {
         this.speciality = speciality;
         return this;
     }
