@@ -4,6 +4,7 @@ import tagarde.core.domain.role.Role;
 import tagarde.core.domain.speciality.Speciality;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class DoctorBuilder {
@@ -13,6 +14,8 @@ public class DoctorBuilder {
     private String email;
     private String password;
     private boolean isEnabled;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
     private Role role;
     private String phoneNumber;
     private String address;
@@ -46,6 +49,14 @@ public class DoctorBuilder {
 
     public DoctorBuilder isEnabled(boolean isEnabled) {
         this.isEnabled = isEnabled;
+        return this;
+    }
+    public DoctorBuilder createAt(LocalDateTime createAt) {
+        this.createAt = createAt;
+        return this;
+    }
+    public DoctorBuilder updateAt(LocalDateTime updateAt) {
+        this.updateAt = updateAt;
         return this;
     }
     public DoctorBuilder role(Role role) {
@@ -83,11 +94,13 @@ public class DoctorBuilder {
         doctor.setLastName(lastName);
         doctor.setEmail(email);
         doctor.setPassword(password);
+        doctor.setCreatedAt(createAt);
+        doctor.setUpdatedAt(updateAt);
         doctor.setRole(role);
         doctor.setPhoneNumber(phoneNumber);
+        doctor.setDateOfBirth(dateOfBirth);
         doctor.setAddress(address);
         doctor.setSpeciality(speciality);
-        doctor.setDateOfBirth(dateOfBirth);
         doctor.setCodeCNOM(codeCNOM);
         doctor.setCodeCNAM(codeCNAM);
         return doctor;

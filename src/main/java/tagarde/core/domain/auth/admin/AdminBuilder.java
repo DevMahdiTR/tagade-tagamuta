@@ -2,6 +2,7 @@ package tagarde.core.domain.auth.admin;
 
 import tagarde.core.domain.role.Role;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class AdminBuilder {
@@ -13,6 +14,8 @@ public class AdminBuilder {
     private String email;
     private String password;
     private boolean isEnabled;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
     private Role role;
 
     public AdminBuilder id(UUID id) {
@@ -52,6 +55,17 @@ public class AdminBuilder {
         this.isEnabled = isEnabled;
         return this;
     }
+
+    public AdminBuilder createAt(LocalDateTime createAt) {
+        this.createAt = createAt;
+        return this;
+    }
+
+    public AdminBuilder updateAt(LocalDateTime updateAt) {
+        this.updateAt = updateAt;
+        return this;
+    }
+
     public AdminBuilder role(Role role) {
         this.role = role;
         return this;
@@ -66,6 +80,8 @@ public class AdminBuilder {
         admin.setEmail(email);
         admin.setPassword(password);
         admin.setEnabled(isEnabled);
+        admin.setCreatedAt(createAt);
+        admin.setUpdatedAt(updateAt);
         admin.setRole(role);
         return admin;
     }

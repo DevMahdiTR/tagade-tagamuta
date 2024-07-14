@@ -1,9 +1,16 @@
 package tagarde.core.service.user;
 
 import lombok.extern.slf4j.Slf4j;
+import tagarde.core.domain.auth.doctor.Doctor;
+import tagarde.core.domain.auth.generalManager.GeneralManager;
+import tagarde.core.domain.auth.hospitalOwner.HospitalOwner;
+import tagarde.core.domain.auth.user.UserDTO;
 import tagarde.core.domain.auth.user.UserEntityDTO;
 
 import org.springframework.stereotype.Service;
+import tagarde.core.mapper.DoctorDTOMapper;
+import tagarde.core.mapper.GeneralManagerDTOMapper;
+import tagarde.core.mapper.HospitalOwnerDTOMapper;
 import tagarde.core.mapper.UserEntityDTOMapper;
 import tagarde.core.exceptions.custom.DatabaseException;
 import tagarde.core.exceptions.custom.ResourceNotFoundException;
@@ -19,15 +26,26 @@ public class UserServiceImpl implements UserEntityService {
 
     private final UserEntityRepository userEntityRepository;
     private final UserEntityDTOMapper userEntityDTOMapper;
-
-    public UserServiceImpl(UserEntityRepository userEntityRepository, UserEntityDTOMapper userEntityDTOMapper) {
+    private final DoctorDTOMapper doctorDTOMapper;
+    private final HospitalOwnerDTOMapper hospitalOwnerDTOMapper;
+    private final GeneralManagerDTOMapper generalManagerDTOMapper;
+    public UserServiceImpl(UserEntityRepository userEntityRepository, UserEntityDTOMapper userEntityDTOMapper, DoctorDTOMapper doctorDTOMapper, HospitalOwnerDTOMapper hospitalOwnerDTOMapper, GeneralManagerDTOMapper generalManagerDTOMapper) {
         this.userEntityRepository = userEntityRepository;
         this.userEntityDTOMapper = userEntityDTOMapper;
+        this.doctorDTOMapper = doctorDTOMapper;
+        this.hospitalOwnerDTOMapper = hospitalOwnerDTOMapper;
+        this.generalManagerDTOMapper = generalManagerDTOMapper;
     }
 
     @Override
-    public UserEntityDTO mapper(UserEntity userEntity) {
-        return userEntityDTOMapper.apply(userEntity);
+    public UserDTO mapper(UserEntity userEntity) {
+
+        return switch (userEntity.getClass().getSimpleName()) {
+            case "Doctor" -> doctorDTOMapper.apply((Doctor) userEntity);
+            case "HospitalOwner" -> hospitalOwnerDTOMapper.apply((HospitalOwner) userEntity);
+            case "GeneralManager" -> generalManagerDTOMapper.apply((GeneralManager) userEntity);
+            default -> userEntityDTOMapper.apply(userEntity);
+        };
     }
 
     @Override

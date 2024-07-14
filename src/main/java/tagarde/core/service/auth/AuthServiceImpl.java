@@ -61,15 +61,15 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public CustomerResponse<String> register(Authentication authentication,@NotNull String role, @NotNull RegisterUserDTO registerUserDTO) {
 
-        if(authentication == null){
-            throw new UnauthorizedActionException("Unauthorized action");
-        }
-
-        String currentRole = authentication.getAuthorities().iterator().next().getAuthority();
-
-        if(!RoleCapabilities.canCreateRole(currentRole, role)){
-            throw new UnauthorizedActionException("Unauthorized action");
-        }
+//        if(authentication == null){
+//            throw new UnauthorizedActionException("Unauthorized action");
+//        }
+//
+//        String currentRole = authentication.getAuthorities().iterator().next().getAuthority();
+//
+//        if(!RoleCapabilities.canCreateRole(currentRole, role)){
+//            throw new UnauthorizedActionException("Unauthorized action");
+//        }
 
         return switch (role) {
             case AuthenticationRoles.ROLE_ADMIN -> adminRegistration.register(registerUserDTO);

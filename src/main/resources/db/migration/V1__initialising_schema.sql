@@ -9,6 +9,8 @@ create table users
     last_name    varchar(255) not null,
     password     varchar(255) not null,
     phone_number varchar(255) not null,
+    created_at  timestamp    not null,
+    updated_at  timestamp    not null,
     role_id      bigint,
     primary key (id)
 );

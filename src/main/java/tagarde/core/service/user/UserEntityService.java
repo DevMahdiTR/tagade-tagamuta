@@ -2,6 +2,7 @@ package tagarde.core.service.user;
 
 
 
+import tagarde.core.domain.auth.user.UserDTO;
 import tagarde.core.domain.auth.user.UserEntityDTO;
 import tagarde.core.domain.auth.user.UserEntity;
 
@@ -10,7 +11,7 @@ import java.util.UUID;
 public interface UserEntityService {
 
 
-    UserEntityDTO mapper(final UserEntity userEntity);
+    UserDTO mapper(final UserEntity userEntity);
 
     UserEntity save(final UserEntity userEntity);
     UserEntity saveAndFlush(final UserEntity userEntity);

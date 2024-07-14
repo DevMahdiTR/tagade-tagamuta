@@ -2,6 +2,7 @@ package tagarde.core.domain.auth.hospitalOwner;
 
 import tagarde.core.domain.role.Role;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class HospitalOwnerBuilder {
@@ -14,6 +15,8 @@ public class HospitalOwnerBuilder {
     private String email;
     private String password;
     private boolean isEnabled;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
     private Role role;
 
     public HospitalOwnerBuilder id(UUID id) {
@@ -56,6 +59,16 @@ public class HospitalOwnerBuilder {
         return this;
     }
 
+    public HospitalOwnerBuilder createAt(LocalDateTime createAt) {
+        this.createAt = createAt;
+        return this;
+    }
+
+    public HospitalOwnerBuilder updateAt(LocalDateTime updateAt) {
+        this.updateAt = updateAt;
+        return this;
+    }
+
     public HospitalOwnerBuilder role(Role role) {
         this.role = role;
         return this;
@@ -71,6 +84,8 @@ public class HospitalOwnerBuilder {
         hospitalOwner.setEmail(email);
         hospitalOwner.setPassword(password);
         hospitalOwner.setEnabled(isEnabled);
+        hospitalOwner.setCreatedAt(createAt);
+        hospitalOwner.setUpdatedAt(updateAt);
         hospitalOwner.setRole(role);
         return hospitalOwner;
     }

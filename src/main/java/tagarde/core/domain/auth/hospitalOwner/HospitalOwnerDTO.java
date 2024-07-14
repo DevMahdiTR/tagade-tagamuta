@@ -1,12 +1,12 @@
-package tagarde.core.domain.auth.user;
+package tagarde.core.domain.auth.hospitalOwner;
 
-
+import tagarde.core.domain.auth.user.UserDTO;
 import tagarde.core.domain.role.Role;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record UserEntityDTO(
+public record HospitalOwnerDTO(
         UUID id,
         String firstName,
         String lastName,
@@ -16,8 +16,10 @@ public record UserEntityDTO(
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
         Role role,
-        boolean isEnabled
-) implements UserDTO{
+        boolean isEnabled,
+        long hospitalId
+
+) implements UserDTO {
     @Override
     public UUID getId() {
         return this.id;
@@ -42,10 +44,6 @@ public record UserEntityDTO(
     public String getPhoneNumber() {
         return this.phoneNumber;
     }
-    @Override
-    public String getEmail() {
-        return this.email;
-    }
 
     @Override
     public LocalDateTime getCreatedAt() {
@@ -58,7 +56,13 @@ public record UserEntityDTO(
     }
 
     @Override
+    public String getEmail() {
+        return this.email;
+    }
+
+    @Override
     public Role getRole() {
         return this.role;
     }
 }
+

@@ -19,6 +19,8 @@ public class UserEntityDTOMapper implements Function<UserEntity, UserEntityDTO> 
                 userEntity.getAddress(),
                 userEntity.getPhoneNumber(),
                 userEntity.getEmail(),
+                userEntity.getCreatedAt(),
+                userEntity.getUpdatedAt(),
                 userEntity.getRole(),
                 userEntity.isEnabled()
         );

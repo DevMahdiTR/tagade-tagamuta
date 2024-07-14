@@ -2,6 +2,8 @@ package tagarde.core.domain.auth.generalManager;
 
 import tagarde.core.domain.role.Role;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class GeneralManagerBuilder {
@@ -14,6 +16,8 @@ public class GeneralManagerBuilder {
     private String email;
     private String password;
     private boolean isEnabled;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
     private Role role;
 
     public GeneralManagerBuilder id(UUID id) {
@@ -56,6 +60,16 @@ public class GeneralManagerBuilder {
         return this;
     }
 
+    public GeneralManagerBuilder createAt(LocalDateTime createAt) {
+        this.createAt = createAt;
+        return this;
+    }
+
+    public GeneralManagerBuilder updateAt(LocalDateTime updateAt) {
+        this.updateAt = updateAt;
+        return this;
+    }
+
     public GeneralManagerBuilder role(Role role) {
         this.role = role;
         return this;
@@ -71,6 +85,8 @@ public class GeneralManagerBuilder {
         generalManager.setEmail(email);
         generalManager.setPassword(password);
         generalManager.setEnabled(isEnabled);
+        generalManager.setCreatedAt(createAt);
+        generalManager.setUpdatedAt(updateAt);
         generalManager.setRole(role);
         return generalManager;
     }

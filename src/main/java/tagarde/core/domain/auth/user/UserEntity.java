@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import tagarde.core.domain.role.Role;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
@@ -48,6 +49,12 @@ public abstract class UserEntity implements UserDetails {
 
     @Column(name = "is_enabled", nullable = false)
     private boolean isEnabled;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 
     //Relations
     @OneToOne()
