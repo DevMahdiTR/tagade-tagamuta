@@ -1,12 +1,9 @@
 package tagarde.core.domain.auth.register;
 
 
-import jakarta.validation.constraints.Pattern;
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import tagarde.core.exceptions.validator.CustomValidation;
+import tagarde.core.utility.validator.CustomValidation;
 
 
 @Setter

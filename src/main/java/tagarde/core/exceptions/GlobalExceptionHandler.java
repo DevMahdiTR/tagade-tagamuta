@@ -112,7 +112,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                         .getFieldErrors()
                         .stream()
                         .map(error -> error.getField() + " : " + error.getDefaultMessage())
-                        .collect(Collectors.joining("; ")));
+                        .collect(Collectors.joining("\n ")));
     }
 
     @Override

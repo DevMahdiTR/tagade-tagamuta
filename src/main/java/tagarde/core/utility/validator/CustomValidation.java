@@ -1,4 +1,4 @@
-package tagarde.core.exceptions.validator;
+package tagarde.core.utility.validator;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
