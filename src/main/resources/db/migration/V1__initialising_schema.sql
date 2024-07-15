@@ -1,3 +1,6 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+
 create table users
 (
     user_type    varchar(31)  not null,
